@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.allsafe.db.ContactsDBManager;
+import com.google.android.gcm.GCMRegistrar;
 
 public class MainActivity extends Activity {
 
@@ -50,9 +51,23 @@ public class MainActivity extends Activity {
         
         bindAddButton();
         bindCheckButton();
+        
+        doGCMRegistrar();
     }
 
-    private void getLocalPhoneNumber() {
+    private void doGCMRegistrar() {
+    	GCMRegistrar.checkDevice(this);
+		GCMRegistrar.checkManifest(this);
+		final String regId = GCMRegistrar.getRegistrationId(this);
+		if (regId.equals("")) {
+			GCMRegistrar.register(this, myPhoneNumber); //TODO:
+		} else {
+			Log.v("GCM - test", "Already registered");
+		}
+		
+	}
+
+	private void getLocalPhoneNumber() {
     	TelephonyManager telephonyManager = (TelephonyManager) this
 				.getSystemService(Context.TELEPHONY_SERVICE);
     	myPhoneNumber = telephonyManager.getLine1Number();
