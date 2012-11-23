@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
         loadListView();
         
         bindAddButton();
-        bindSelectButton();
+        bindCheckButton();
     }
 
     private void getLocalPhoneNumber() {
